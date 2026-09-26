@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" class="theme-sa">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>GTA FM</title>
+  <meta name="description" content="Listings and live streams for every radio station in Liberty City, Vice City and San Andreas." />
+  <meta name="theme-color" content="#0f0d0a" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23151412'/%3E%3Ctext x='16' y='24' font-family='Arial Black,Arial' font-weight='900' font-size='20' fill='%23f1ebdd' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&family=Anton&family=Yellowtail&family=Pirata+One&family=Bebas+Neue&family=Kaushan+Script&family=Barlow+Condensed:wght@600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead__rule">
+      <span id="dateLine"></span>
+      <span class="masthead__count" id="totalListeners" hidden><span></span></span>
+    </div>
+    <a class="masthead__title" href="./">GTA FM</a>
+    <p class="masthead__sub">Every station in Liberty City, Vice City and San&nbsp;Andreas, live, around the clock.</p>
+  </header>
+
+  <nav class="games" aria-label="Games">
+    <ol id="games" role="tablist"></ol>
+  </nav>
+
+  <main class="page">
+    <section class="section" aria-labelledby="gameTitle">
+      <header class="section__head">
+        <p class="section__kicker" id="gameMeta"></p>
+        <h2 class="section__title" id="gameTitle"></h2>
+        <p class="section__blurb" id="gameBlurb"></p>
+      </header>
+
+      <div class="listing__cols" aria-hidden="true">
+        <span>No.</span><span></span><span>Station</span><span>Playing now</span><span class="num">Tuned in</span>
+      </div>
+      <ol class="listing" id="grid"></ol>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <p>
+      An unofficial listening guide. The streams, song titles and listener figures are provided by
+      <a href="https://gtaradio.net" target="_blank" rel="noopener">gtaradio.net</a>, a fan project
+      that pays for its own servers. If you listen here regularly,
+      <a href="https://boosty.to/applethecandy" target="_blank" rel="noopener">chip in over there</a>.
+    </p>
+    <p class="colophon__keys">Space to play or pause. Left and right arrows change station, up and down change volume, V opens the visualizer, 1 to 6 switch game.</p>
+    <p class="colophon__small">Grand Theft Auto and all station names and logos are trademarks of Rockstar Games. Not affiliated with Rockstar Games or gtaradio.net.</p>
+  </footer>
+
+  <section class="player" id="deck" aria-label="Player" data-open="false">
+    <div class="player__drawer" id="drawer">
+      <div class="player__drawer-inner">
+        <canvas class="player__viz" id="viz" aria-hidden="true"></canvas>
+        <div class="player__drawer-foot">
+          <p class="player__meta"><span id="deckStatus">Off</span> <span class="player__sep">/</span> <span id="deckGame"></span></p>
+          <label class="player__vol" id="volumeWrap">
+            <span>Vol</span>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="player__bar">
+      <div class="player__art" id="deckArt" aria-hidden="true"></div>
+      <button class="player__text" id="barText" aria-controls="drawer" title="Show or hide the visualizer">
+        <span class="player__station" id="deckStation">Nothing on yet</span>
+        <span class="player__track" id="deckTrack">Pick a station from the listings.</span>
+      </button>
+      <button class="ctl ctl--viz" id="drawerBtn" aria-expanded="false" aria-controls="drawer" aria-label="Visualizer" title="Show visualizer (V)">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 12h3v6H2zM6.5 6h3v12h-3zM11 9h3v9h-3zM15.5 3h3v15h-3z"/></svg>
+      </button>
+      <button class="ctl ctl--play" id="playBtn" aria-label="Play" title="Play or pause (Space)">
+        <svg class="i-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v14l12-7z"/></svg>
+        <svg class="i-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3h4.5v14H4zM11.5 3H16v14h-4.5z"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
