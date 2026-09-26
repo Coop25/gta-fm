@@ -59,10 +59,6 @@
         <canvas class="player__viz" id="viz" aria-hidden="true"></canvas>
         <div class="player__drawer-foot">
           <p class="player__meta"><span id="deckStatus">Off</span> <span class="player__sep">/</span> <span id="deckGame"></span></p>
-          <label class="player__vol" id="volumeWrap">
-            <span>Vol</span>
-            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
-          </label>
         </div>
       </div>
     </div>
@@ -73,6 +69,10 @@
         <span class="player__station" id="deckStation">Nothing on yet</span>
         <span class="player__track" id="deckTrack">Pick a station from the listings.</span>
       </button>
+      <label class="player__vol" id="volumeWrap" title="Volume (↑ / ↓)">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5v5h3.5L11 16V4L6.5 7.5zM13.5 10a3.5 3.5 0 0 0-1.5-2.9v5.8a3.5 3.5 0 0 0 1.5-2.9z"/></svg>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
+      </label>
       <button class="ctl ctl--viz" id="drawerBtn" aria-expanded="false" aria-controls="drawer" aria-label="Visualizer" title="Show visualizer (V)">
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 12h3v6H2zM6.5 6h3v12h-3zM11 9h3v9h-3zM15.5 3h3v15h-3z"/></svg>
       </button>
