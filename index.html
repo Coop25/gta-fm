@@ -7,12 +7,19 @@
   <meta name="description" content="Listings and live streams for every radio station in Liberty City, Vice City and San Andreas." />
   <meta name="theme-color" content="#0f0d0a" />
   <meta name="color-scheme" content="dark" />
+  <!-- Installable app: manifest for Android/desktop, apple-* tags for iOS "Add to Home Screen". -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="GTA FM" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23151412'/%3E%3Ctext x='16' y='24' font-family='Arial Black,Arial' font-weight='900' font-size='20' fill='%23f1ebdd' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&family=Anton&family=Yellowtail&family=Pirata+One&family=Bebas+Neue&family=Kaushan+Script&family=Barlow+Condensed:wght@600;800&display=swap" rel="stylesheet" />
   <!-- Bump ?v= on every deploy so browsers never pair new HTML with a cached old CSS/JS (Pages caches for 10 min). -->
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <header class="masthead">
@@ -75,7 +82,10 @@
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
       </label>
       <button class="ctl ctl--viz" id="drawerBtn" aria-expanded="false" aria-controls="drawer" aria-label="Visualizer" title="Show visualizer (V)">
-        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 12h3v6H2zM6.5 6h3v12h-3zM11 9h3v9h-3zM15.5 3h3v15h-3z"/></svg>
+        <!-- These four bars double as a live mini level meter while the drawer is closed. -->
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <rect x="2" y="12" width="3" height="6" /><rect x="6.5" y="6" width="3" height="12" /><rect x="11" y="9" width="3" height="9" /><rect x="15.5" y="3" width="3" height="15" />
+        </svg>
       </button>
       <button class="ctl ctl--play" id="playBtn" aria-label="Play" title="Play or pause (Space)">
         <svg class="i-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v14l12-7z"/></svg>
@@ -84,6 +94,6 @@
     </div>
   </section>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

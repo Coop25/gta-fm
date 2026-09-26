@@ -592,9 +592,49 @@
   }
   new ResizeObserver(sizeCanvas).observe(cv);
 
+  // Mini meter: the four bars in the visualizer button, used while the drawer is closed.
+  const miniBars = [...els.drawerBtn.querySelectorAll("rect")];
+  const miniRest = miniBars.map((r) => Number(r.getAttribute("height")));
+  const miniBands = [[1, 4], [4, 10], [10, 22], [22, 44]]; // analyser bin ranges, low to high
+  let miniDirty = false;
+
+  function updateMiniMeter(live) {
+    const audible = state.wantPlay && !audio.paused && !state.loading && !drawerOpen;
+    els.deck.classList.toggle("is-audible", audible && live);
+    els.deck.classList.toggle("is-throbbing", audible && !live);
+    if (audible && live) {
+      let total = 0;
+      miniBars.forEach((r, i) => {
+        const [a, b] = miniBands[i];
+        let sum = 0;
+        for (let k = a; k < b; k++) sum += freq[k];
+        const v = sum / ((b - a) * 255);
+        total += v;
+        const h = 2 + v * 14;
+        r.setAttribute("y", (18 - h).toFixed(1));
+        r.setAttribute("height", h.toFixed(1));
+      });
+      els.deck.style.setProperty("--lvl", (total / miniBars.length).toFixed(3));
+      miniDirty = true;
+    } else if (miniDirty) {
+      miniBars.forEach((r, i) => { r.setAttribute("y", 18 - miniRest[i]); r.setAttribute("height", miniRest[i]); });
+      els.deck.style.removeProperty("--lvl");
+      miniDirty = false;
+    }
+  }
+
   function draw() {
     requestAnimationFrame(draw);
-    if (!drawerOpen) return; // nothing to draw while the drawer is shut
+    let live = false;
+    if (analyser && state.wantPlay && !audio.paused) {
+      if (!freq) freq = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(freq);
+      live = freq.some((v) => v > 0);
+    }
+    phase += 0.03;
+    updateMiniMeter(live);
+    if (!drawerOpen) return; // the big visualizer only draws while the drawer is open
+
     const W = cv.width, H = cv.height;
     if (!W || !H) return;
     g2.clearRect(0, 0, W, H);
@@ -604,14 +644,6 @@
     const bars = Math.max(24, Math.min(96, Math.floor(W / (16 * dpr))));
     const gap = W / bars;
     const bw = Math.max(1, Math.floor(gap * 0.6));
-
-    let live = false;
-    if (analyser && state.wantPlay && !audio.paused) {
-      if (!freq) freq = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(freq);
-      live = freq.some((v) => v > 0);
-    }
-    phase += 0.03;
     for (let i = 0; i < bars; i++) {
       let v;
       if (live) {
@@ -707,4 +739,9 @@
   setInterval(() => { if (!document.hidden) pollStatus(); }, STATUS_INTERVAL);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) pollStatus(); });
   requestAnimationFrame(draw);
+
+  // Installable app (Add to Home Screen). Only over https or localhost.
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
 })();
