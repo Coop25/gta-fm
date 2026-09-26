@@ -43,6 +43,8 @@ git remote add origin https://github.com/<you>/<repo>.git
 git push -u origin main
 ```
 
+When you change `styles.css` or `app.js`, bump the `?v=` number on their links in `index.html`. GitHub Pages lets browsers cache files for 10 minutes, and without a new version number a visitor can get the new HTML with the old CSS.
+
 Then open the repository on GitHub and go to **Settings → Pages**. Under **Source**, pick **Deploy from a branch**, then select `main` and `/ (root)`. The site goes live at `https://<you>.github.io/<repo>/`.
 
 ## Credits
